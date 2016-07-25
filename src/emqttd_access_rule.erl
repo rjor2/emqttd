@@ -134,7 +134,9 @@ match_topics(Client, Topic, [TopicFilter|Filters]) ->
     end.
 
 match_topic(Topic, {eq, TopicFilter}) ->
-    Topic =:= TopicFilter;
+    % Topic =:= TopicFilter;
+    % For our use case we need to block topics starting with a certain pattern
+    string:str(Topic, TopicFilter) =:= 1;
 match_topic(Topic, TopicFilter) ->
     emqttd_topic:match(Topic, TopicFilter).
 
